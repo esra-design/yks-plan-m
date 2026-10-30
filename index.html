@@ -1,1 +1,477 @@
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff4f7">
+  <title>Dear Student ♡</title>
+  <meta name="description" content="Kendi çalışma alanın. Planla, takip et, başar.">
+  <meta property="og:title" content="Dear Student ♡">
+  <meta property="og:description" content="Küçük adımlar, büyük hayaller. Kendi çalışma alanını keşfet!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://YOUR-USERNAME.github.io/yks-programim/cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <style>
+    :root {
+      --pink: #e9a9bd;
+      --pink-dark: #c87996;
+      --pale: #fff4f7;
+      --cream: #fffaf7;
+      --ink: #55434b;
+      --muted: #9c858e;
+      --line: #f2dfe6;
+      --white: #fff;
+      --green: #9dbba7;
+      --shadow: 0 8px 28px rgba(174, 116, 139, .09);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--pale);
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+    .app { max-width: 1100px; margin: auto; padding: 25px 18px 55px; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 15px; margin-bottom: 24px;
+    }
+    .brand { font-family: Georgia, serif; font-size: 30px; color: var(--pink-dark); }
+    .brand small { display: block; font: 11px "Segoe UI", sans-serif; letter-spacing: 3px; color: var(--muted); margin-top: 4px; }
+    .date-label { color: var(--muted); font-size: 13px; text-align: right; }
+    .hero {
+      background: linear-gradient(120deg, #f8dce5, #fff0f3 65%, #f9e8df);
+      border-radius: 25px; padding: 30px; margin-bottom: 22px;
+      display: flex; justify-content: space-between; align-items: center; gap: 20px;
+      box-shadow: var(--shadow);
+    }
+    .hero h1 { font: 32px Georgia, serif; margin: 0 0 9px; color: #805b6a; }
+    .hero p { margin: 0; color: #987887; line-height: 1.6; }
+    .hero-flower { font-size: 58px; opacity: .8; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; margin-bottom: 22px; }
+    .stat, .panel {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 19px; padding: 18px; box-shadow: var(--shadow);
+    }
+    .stat span { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .stat strong { font: 25px Georgia, serif; color: var(--pink-dark); }
+    nav {
+      display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0;
+    }
+    nav button {
+      border: 1px solid var(--line); background: #fff; color: var(--muted);
+      border-radius: 30px; padding: 10px 15px; font-size: 13px;
+    }
+    nav button.active { background: var(--pink); color: white; border-color: var(--pink); }
+    .page { display: none; }
+    .page.active { display: block; }
+    .panel { margin-bottom: 16px; }
+    h2 { font: 23px Georgia, serif; margin: 0 0 7px; color: #936779; }
+    h3 { font: 17px Georgia, serif; margin: 0 0 12px; color: #936779; }
+    .sub { color: var(--muted); font-size: 13px; margin: 0 0 17px; }
+    .day-tabs { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 12px; }
+    .day-tabs button {
+      border: 1px solid var(--line); background: #fff8fa; color: var(--muted);
+      border-radius: 12px; padding: 9px 13px; white-space: nowrap;
+    }
+    .day-tabs button.active { background: #f4d5df; color: #86566a; }
+    .progress-track { height: 9px; border-radius: 20px; background: #f8eaf0; overflow: hidden; margin: 12px 0; }
+    .progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, #e7a5bb, #c9829d); border-radius: 20px; transition: .25s; }
+    .task {
+      display: flex; align-items: center; gap: 10px; padding: 12px 4px;
+      border-bottom: 1px solid #f8edf1; font-size: 14px;
+    }
+    .task:last-child { border-bottom: 0; }
+    .task input { accent-color: var(--pink-dark); width: 17px; height: 17px; }
+    .task.done span { text-decoration: line-through; color: #b9a8ae; }
+    .task span { flex: 1; }
+    .delete {
+      border: 0; background: transparent; color: #c99aaa; font-size: 18px;
+      padding: 2px 7px;
+    }
+    .add-row { display: flex; gap: 8px; margin-top: 14px; }
+    input, textarea, select {
+      width: 100%; border: 1px solid var(--line); background: #fffafb;
+      border-radius: 12px; padding: 11px 12px; color: var(--ink); outline: none;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--pink); }
+    textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
+    .btn {
+      border: 0; border-radius: 12px; background: var(--pink);
+      color: white; padding: 11px 16px; white-space: nowrap;
+    }
+    .btn:hover { background: var(--pink-dark); }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .topic-row {
+      display: flex; gap: 10px; align-items: center; padding: 11px 0;
+      border-bottom: 1px solid #f8edf1; font-size: 14px;
+    }
+    .topic-row input { width: 17px; height: 17px; accent-color: var(--pink-dark); }
+    .topic-row span { flex: 1; }
+    .topic-row.done span { text-decoration: line-through; color: #b9a8ae; }
+    .exam {
+      border: 1px solid var(--line); border-radius: 13px; padding: 13px;
+      margin-top: 10px; background: #fffafb;
+    }
+    .exam strong { color: var(--pink-dark); }
+    .quote {
+      background: linear-gradient(120deg, #fff0f4, #fff8f1);
+      border-radius: 18px; padding: 28px; text-align: center;
+      font: 21px Georgia, serif; color: #966b7c; line-height: 1.6;
+    }
+    .count-number { font: 48px Georgia, serif; color: var(--pink-dark); text-align: center; margin: 15px 0; }
+    .empty { color: #b9a8ae; font-size: 13px; padding: 12px 0; }
+    footer { text-align: center; color: #b99ca8; font: 13px Georgia, serif; padding: 25px 0 5px; }
+
+    @media(max-width:650px) {
+      .app { padding: 17px 12px 40px; }
+      .brand { font-size: 26px; }
+      .hero { padding: 22px; }
+      .hero h1 { font-size: 26px; }
+      .hero-flower { font-size: 42px; }
+      .stats { gap: 8px; }
+      .stat { padding: 13px 10px; }
+      .stat strong { font-size: 21px; }
+      .stat span { font-size: 11px; }
+      .grid2 { grid-template-columns: 1fr; }
+      nav { gap: 6px; }
+      nav button { padding: 9px 11px; font-size: 12px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <header>
+    <div class="brand">Dear Student ♡<small>YOUR LITTLE STUDY SPACE</small></div>
+    <div class="date-label" id="today"></div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Her gün yeni bir başlangıç.</h1>
+      <p>Kendine inan. Küçük adımlar da seni hayallerine götürür. 🌷</p>
+    </div>
+    <div class="hero-flower">🌸</div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><span>Bugünkü görevler</span><strong id="statTasks">0 / 0</strong></div>
+    <div class="stat"><span>Tamamlanan konular</span><strong id="statTopics">0</strong></div>
+    <div class="stat"><span>Deneme sayısı</span><strong id="statExams">0</strong></div>
+  </section>
+
+  <nav>
+    <button class="active" data-page="planner">♡ Haftalık plan</button>
+    <button data-page="topics">Konu takibi</button>
+    <button data-page="exams">Denemeler</button>
+    <button data-page="journal">Günlüğüm</button>
+    <button data-page="motivation">Motivasyon</button>
+    <button data-page="countdown">Geri sayım</button>
+  </nav>
+
+  <main>
+    <section class="page active" id="planner">
+      <div class="panel">
+        <h2>Haftalık çalışma planım</h2>
+        <p class="sub">Her küçük tik, hedefine bir adım daha yaklaştığını gösterir.</p>
+        <div class="day-tabs" id="dayTabs"></div>
+        <h3 id="selectedDay">Pazartesi</h3>
+        <div id="taskProgressText" class="sub">0 görev tamamlandı</div>
+        <div class="progress-track"><div class="progress-fill" id="taskProgress"></div></div>
+        <div id="taskList"></div>
+        <div class="add-row">
+          <input id="newTask" placeholder="Yeni bir görev ekle...">
+          <button class="btn" id="addTask">Ekle +</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="topics">
+      <div class="panel">
+        <h2>Konu takip defterim</h2>
+        <p class="sub">Dersini seç, konularını ekle ve bitirdikçe işaretle.</p>
+        <div class="grid2">
+          <select id="subject">
+            <option>TYT Matematik</option><option>TYT Türkçe</option>
+            <option>TYT Geometri</option><option>TYT Fen</option>
+            <option>TYT Sosyal</option><option>AYT Matematik</option>
+            <option>AYT Edebiyat</option><option>AYT Tarih</option>
+            <option>AYT Coğrafya</option><option>AYT Diğer</option>
+          </select>
+          <input id="newTopic" placeholder="Konu adı...">
+        </div>
+        <div class="add-row"><button class="btn" id="addTopic">Konuyu ekle +</button></div>
+        <div id="topicList" style="margin-top:15px"></div>
+      </div>
+    </section>
+
+    <section class="page" id="exams">
+      <div class="panel">
+        <h2>Deneme sonuçlarım</h2>
+        <p class="sub">Her deneme gelişimini görmen için bir fırsat.</p>
+        <div class="grid2">
+          <select id="examType"><option>TYT</option><option>AYT</option></select>
+          <input id="examName" placeholder="Deneme adı">
+          <input id="examDate" type="date">
+          <input id="examNet" type="number" step="0.01" placeholder="Toplam net">
+        </div>
+        <div class="add-row"><button class="btn" id="addExam">Sonucu kaydet +</button></div>
+        <div id="examList" style="margin-top:15px"></div>
+      </div>
+    </section>
+
+    <section class="page" id="journal">
+      <div class="panel">
+        <h2>Bugün neler yaptım?</h2>
+        <p class="sub">Kendine ait küçük bir alan. Düşüncelerini özgürce yaz.</p>
+        <input type="date" id="journalDate">
+        <textarea id="journalText" placeholder="Bugün nasıl geçti? Neler öğrendin? Yarın ne yapmak istersin?"></textarea>
+        <div class="add-row"><button class="btn" id="saveJournal">Günlüğümü kaydet ♡</button></div>
+        <p class="sub" id="journalStatus"></p>
+      </div>
+    </section>
+
+    <section class="page" id="motivation">
+      <div class="panel">
+        <h2>Kendine bir not bırak ♡</h2>
+        <p class="sub">Bazen ihtiyacın olan tek şey güzel bir hatırlatmadır.</p>
+        <div class="quote" id="quote">Bugün kendin için attığın küçük adım, yarının büyük başarısı olabilir.</div>
+        <div class="add-row" style="justify-content:center">
+          <button class="btn" id="newQuote">Bir motivasyon daha ✨</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="countdown">
+      <div class="panel">
+        <h2>Hayaline kalan süre</h2>
+        <p class="sub">Sınav tarihini belirle, geri sayımın başlasın.</p>
+        <label for="examTarget" class="sub">Sınav tarihi</label>
+        <input type="date" id="examTarget">
+        <div class="count-number" id="countNumber">♡</div>
+        <p class="sub" id="countMessage" style="text-align:center">Tarihini seçince geri sayım burada görünecek.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>made with love ♡ Dear Student</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const DAYS = ["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"];
+const KEY = "dearStudentDataV1";
+
+const defaultData = {
+  tasks: DAYS.map((day, i) => [
+    {text:"Günün çalışma hedefini belirle",done:false},
+    {text:"Matematik çalışması",done:false},
+    {text:"Türkçe / paragraf çalışması",done:false},
+    {text:"Bir konu tekrarı yap",done:false},
+    {text:"Soru çözümü",done:false},
+    {text:"Yanlışlarını incele",done:false},
+    {text:"Günün değerlendirmesini yaz",done:false}
+  ]),
+  topics: [],
+  exams: [],
+  journals: {},
+  target: ""
+};
+
+let data;
+try {
+  data = JSON.parse(localStorage.getItem(KEY)) || structuredClone(defaultData);
+} catch(e) {
+  data = JSON.parse(JSON.stringify(defaultData));
+}
+if (!Array.isArray(data.tasks) || data.tasks.length !== 7) data.tasks = JSON.parse(JSON.stringify(defaultData.tasks));
+let selectedDay = 0;
+
+function save() {
+  localStorage.setItem(KEY, JSON.stringify(data));
+  updateStats();
+}
+
+function updateStats() {
+  const tasks = data.tasks[selectedDay] || [];
+  const done = tasks.filter(t => t.done).length;
+  $("statTasks").textContent = `${done} / ${tasks.length}`;
+  $("statTopics").textContent = data.topics.filter(t => t.done).length;
+  $("statExams").textContent = data.exams.length;
+}
+
+function renderDays() {
+  $("dayTabs").innerHTML = DAYS.map((d,i) =>
+    `<button class="${i===selectedDay?"active":""}" data-day="${i}">${d}</button>`
+  ).join("");
+  $("dayTabs").querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      selectedDay = Number(btn.dataset.day);
+      renderDays(); renderTasks(); updateStats();
+    });
+  });
+  $("selectedDay").textContent = DAYS[selectedDay];
+}
+
+function renderTasks() {
+  const tasks = data.tasks[selectedDay];
+  const done = tasks.filter(t => t.done).length;
+  const percent = tasks.length ? Math.round(done / tasks.length * 100) : 0;
+  $("taskProgress").style.width = percent + "%";
+  $("taskProgressText").textContent = `${done} / ${tasks.length} görev tamamlandı · %${percent}`;
+  $("taskList").innerHTML = tasks.length ? tasks.map((t,i) => `
+    <div class="task ${t.done?"done":""}">
+      <input type="checkbox" data-task="${i}" ${t.done?"checked":""}>
+      <span>${escapeHTML(t.text)}</span>
+      <button class="delete" data-delete-task="${i}" title="Sil">×</button>
+    </div>`).join("") : `<p class="empty">Henüz görev yok. Yeni bir görev ekleyebilirsin.</p>`;
+
+  $("taskList").querySelectorAll("[data-task]").forEach(el => {
+    el.addEventListener("change", () => {
+      tasks[Number(el.dataset.task)].done = el.checked;
+      save(); renderTasks();
+    });
+  });
+  $("taskList").querySelectorAll("[data-delete-task]").forEach(el => {
+    el.addEventListener("click", () => {
+      tasks.splice(Number(el.dataset.deleteTask),1);
+      save(); renderTasks();
+    });
+  });
+}
+
+$("addTask").addEventListener("click", () => {
+  const text = $("newTask").value.trim();
+  if (!text) return;
+  data.tasks[selectedDay].push({text,done:false});
+  $("newTask").value = "";
+  save(); renderTasks();
+});
+$("newTask").addEventListener("keydown", e => { if(e.key==="Enter") $("addTask").click(); });
+
+function renderTopics() {
+  const list = $("topicList");
+  list.innerHTML = data.topics.length ? data.topics.map((t,i) => `
+    <div class="topic-row ${t.done?"done":""}">
+      <input type="checkbox" data-topic="${i}" ${t.done?"checked":""}>
+      <span><b>${escapeHTML(t.subject)}</b> · ${escapeHTML(t.name)}</span>
+      <button class="delete" data-delete-topic="${i}">×</button>
+    </div>`).join("") : `<p class="empty">Henüz konu eklemedin.</p>`;
+  list.querySelectorAll("[data-topic]").forEach(el => el.addEventListener("change", () => {
+    data.topics[Number(el.dataset.topic)].done = el.checked; save(); renderTopics();
+  }));
+  list.querySelectorAll("[data-delete-topic]").forEach(el => el.addEventListener("click", () => {
+    data.topics.splice(Number(el.dataset.deleteTopic),1); save(); renderTopics();
+  }));
+}
+$("addTopic").addEventListener("click", () => {
+  const name = $("newTopic").value.trim();
+  if (!name) return;
+  data.topics.push({subject:$("subject").value,name,done:false});
+  $("newTopic").value = ""; save(); renderTopics();
+});
+
+function renderExams() {
+  const list = $("examList");
+  list.innerHTML = data.exams.length ? [...data.exams].reverse().map((e,revIndex) => {
+    const i = data.exams.length - 1 - revIndex;
+    return `<div class="exam">
+      <strong>${escapeHTML(e.type)} · ${escapeHTML(e.name || "İsimsiz deneme")}</strong>
+      <p class="sub">${escapeHTML(e.date || "Tarih belirtilmedi")} · <b>${escapeHTML(String(e.net))} net</b></p>
+      <button class="delete" data-delete-exam="${i}">Denemeyi sil ×</button>
+    </div>`;
+  }).join("") : `<p class="empty">Henüz deneme sonucu eklenmedi.</p>`;
+  list.querySelectorAll("[data-delete-exam]").forEach(el => el.addEventListener("click", () => {
+    data.exams.splice(Number(el.dataset.deleteExam),1); save(); renderExams();
+  }));
+}
+$("addExam").addEventListener("click", () => {
+  const net = Number($("examNet").value);
+  if ($("examNet").value.trim()==="" || !Number.isFinite(net)) return;
+  data.exams.push({
+    type:$("examType").value, name:$("examName").value.trim(),
+    date:$("examDate").value, net
+  });
+  $("examName").value = ""; $("examDate").value = ""; $("examNet").value = "";
+  save(); renderExams();
+});
+
+$("journalDate").value = localDate();
+function localDate() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function loadJournal() {
+  $("journalText").value = data.journals[$("journalDate").value] || "";
+  $("journalStatus").textContent = "";
+}
+$("journalDate").addEventListener("change", loadJournal);
+$("saveJournal").addEventListener("click", () => {
+  data.journals[$("journalDate").value] = $("journalText").value;
+  save(); $("journalStatus").textContent = "Günlüğün bu tarayıcıya kaydedildi ♡";
+});
+
+const quotes = [
+  "Bugün kendin için attığın küçük adım, yarının büyük başarısı olabilir.",
+  "Mükemmel olmak zorunda değilsin. Devam etmen yeterli. ♡",
+  "Hayallerine giden yol, bugün yaptığın seçimlerden geçiyor.",
+  "Kendine zaman tanı. Emeklerin boşa gitmiyor.",
+  "Bir gün değil, her gün biraz daha. 🌷",
+  "Başlamak için hazır hissetmeyi bekleme. Küçük bir adım at."
+];
+$("newQuote").addEventListener("click", () => {
+  $("quote").textContent = quotes[Math.floor(Math.random()*quotes.length)];
+});
+
+$("examTarget").value = data.target || "";
+$("examTarget").addEventListener("change", () => {
+  data.target = $("examTarget").value; save(); renderCountdown();
+});
+function renderCountdown() {
+  if (!data.target) {
+    $("countNumber").textContent = "♡";
+    $("countMessage").textContent = "Tarihini seçince geri sayım burada görünecek.";
+    return;
+  }
+  const now = new Date();
+  const target = new Date(data.target + "T00:00:00");
+  const diff = Math.ceil((target - new Date(now.getFullYear(),now.getMonth(),now.getDate())) / 86400000);
+  $("countNumber").textContent = diff > 0 ? diff + " gün" : diff === 0 ? "Bugün!" : "Bu tarih geçti";
+  $("countMessage").textContent = diff > 0 ? "Her gün biraz daha yaklaşıyorsun. 🌸" : "Yeni bir hedef tarihi belirleyebilirsin.";
+}
+
+document.querySelectorAll("nav button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    $(btn.dataset.page).classList.add("active");
+  });
+});
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[ch]);
+}
+
+$("today").textContent = new Date().toLocaleDateString("tr-TR", {
+  weekday:"long", day:"numeric", month:"long"
+});
+renderDays();
+renderTasks();
+renderTopics();
+renderExams();
+loadJournal();
+renderCountdown();
+updateStats();
+</script>
+</body>
+</html>
+
